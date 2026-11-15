@@ -1,0 +1,60 @@
+name: New imagery source
+description: Suggest open aerial imagery (CC BY 4.0 or similar) to build in
+labels: [imagery]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Built-in sources must allow derived works and redistribution, including commercial use,
+        because textured roofs are cut from the imagery and shared in every build. CC BY 4.0, CC0,
+        public domain and most national open government licences qualify. Non-commercial (NC) and
+        no-derivatives (ND) licences, and "view only" terms, don't. See LICENSES.md for the
+        current list.
+  - type: input
+    id: coverage
+    attributes:
+      label: Coverage
+      description: Country, state or city it covers.
+      placeholder: Denmark
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Tile service URL
+      description: XYZ, WMTS, WMS or ArcGIS MapServer/ImageServer endpoint, with no API key.
+      placeholder: https://example.org/wmts/ortho/{z}/{x}/{y}.jpg
+    validations:
+      required: true
+  - type: input
+    id: resolution
+    attributes:
+      label: Resolution and year
+      placeholder: 12.5 cm, 2025
+  - type: input
+    id: licence
+    attributes:
+      label: Licence
+      placeholder: CC BY 4.0
+    validations:
+      required: true
+  - type: input
+    id: licence_url
+    attributes:
+      label: Link to the licence or terms
+      description: The provider's own page that states the licence for this imagery.
+    validations:
+      required: true
+  - type: input
+    id: attribution
+    attributes:
+      label: Required attribution
+      placeholder: © Example Agency, CC BY 4.0
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: The licence allows derived works and redistribution, including commercial use.
+          required: true
+        - label: The service works without an API key, login or registration.

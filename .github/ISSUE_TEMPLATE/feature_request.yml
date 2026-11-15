@@ -1,5 +1,5 @@
 name: Feature request
-description: A new building rule, imagery source, output format or UI change
+description: A new building rule, output format or UI change
 labels: [enhancement]
 body:
   - type: textarea
@@ -13,4 +13,4 @@ body:
     id: example
     attributes:
       label: Example
-      description: An area, an OSM tag, or an imagery source (with a link to its licence) that shows it.
+      description: An area or an OSM tag that shows it.
