@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tak-buildings3d"
+version = "0.1.0"
+description = "OpenStreetMap buildings to lightweight 3D Tiles (b3dm) for ATAK, TAK-X, Cesium and Unreal"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "Tactical Sensor Integration" }]
+requires-python = ">=3.12"
+dependencies = [
+  "numpy>=1.26",
+  "shapely>=2.0",
+  "pyproj>=3.6",
+  "rasterio>=1.3",
+  "pillow>=10",
+  "mapbox_earcut>=1.0",
+  "requests>=2.31",
+  "pygltflib>=1.16",
+  "osmium>=4.0",
+]
+
+[project.optional-dependencies]
+web = ["fastapi>=0.110", "uvicorn>=0.29"]
+dev = ["pytest>=8", "httpx>=0.27", "pyflakes>=3"]
+
+[project.urls]
+Homepage = "https://github.com/TacticalSensorIntegration/tak-buildings3d"
+Issues = "https://github.com/TacticalSensorIntegration/tak-buildings3d/issues"
+
+[project.scripts]
+tak-buildings3d = "tak_buildings3d.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["tak_buildings3d*"]
+
+[tool.setuptools.package-data]
+"tak_buildings3d" = ["outlines.json"]
+"tak_buildings3d.web" = ["static/**/*"]

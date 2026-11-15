@@ -1,0 +1,16 @@
+name: Feature request
+description: A new building rule, imagery source, output format or UI change
+labels: [enhancement]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What you'd like
+      description: The change, and the problem it solves for you.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example
+      description: An area, an OSM tag, or an imagery source (with a link to its licence) that shows it.

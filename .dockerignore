@@ -1,0 +1,9 @@
+.venv
+data
+out
+tak-buildings3d-data
+**/__pycache__
+*.pyc
+.git
+tests
+references/

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      - name: Install
+        run: pip install ".[web,dev]"
+      - name: Lint
+        run: pyflakes tak_buildings3d
+      - name: Test
+        run: pytest -q tests
+      - name: Check JavaScript syntax
+        run: for f in tak_buildings3d/web/static/js/*.js; do node --check "$f"; done
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build image
+        run: docker build -t tak-buildings3d:ci .
+      - name: Start and check the app
+        run: |
+          docker run --rm tak-buildings3d:ci python -c "import pkgutil, importlib, tak_buildings3d as t; [importlib.import_module(m.name) for m in pkgutil.walk_packages(t.__path__, 'tak_buildings3d.') if not m.name.endswith('__main__')]"
+          docker run -d --name app -p 8000:8000 tak-buildings3d:ci
+          for i in $(seq 30); do curl -sf localhost:8000/api/imagery > /dev/null && break; sleep 2; done
+          curl -sf localhost:8000/ | grep -q cesium
+          curl -sf localhost:8000/static/js/imagery.js > /dev/null
+          docker logs app

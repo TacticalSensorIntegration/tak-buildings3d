@@ -1,0 +1,37 @@
+name: Bug report
+description: Something broke, or a build looks wrong
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what you got. Screenshots help.
+    validations:
+      required: true
+  - type: textarea
+    id: build
+    attributes:
+      label: Build settings
+      description: Area (GeoJSON, or lat/lon/radius), extract or Overpass, roof mode, imagery and detail.
+  - type: input
+    id: osm
+    attributes:
+      label: OSM way ids of wrong buildings
+      description: Click a building on openstreetmap.org to find it. Its entry in out/<name>/report.json helps too.
+  - type: dropdown
+    id: viewer
+    attributes:
+      label: Where you saw it
+      multiple: true
+      options: [tak-buildings3d web map, ATAK, TAK-X / WinTAK, CesiumJS, Cesium for Unreal, Other]
+  - type: input
+    id: version
+    attributes:
+      label: tak-buildings3d version or commit
+      description: "Docker or Python, and `git rev-parse --short HEAD`"
+  - type: textarea
+    id: log
+    attributes:
+      label: Build log or error
+      render: text

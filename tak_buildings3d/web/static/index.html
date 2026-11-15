@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tak-buildings3d</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231f6feb'/><path fill='%23fff' d='M4 27V16l5.5-5 5.5 5v11zM16 27V7h6.5v20zM23.5 27V13H28v14z'/><path fill='%231f6feb' d='M18 10h2.5v2H18zm0 4h2.5v2H18zm0 4h2.5v2H18zM8 20h3v7H8z'/></svg>">
+<script src="https://cdn.jsdelivr.net/npm/cesium@1.147.0/Build/Cesium/Cesium.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/cesium@1.147.0/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mgrs@2.2.0/dist/mgrs.js"></script>
+<script src="/static/js/core.js" defer></script>
+<script src="/static/js/navigation.js" defer></script>
+<script src="/static/js/imagery.js" defer></script>
+<script src="/static/js/area.js" defer></script>
+<script src="/static/js/osm-data.js" defer></script>
+<script src="/static/js/builds.js" defer></script>
+<link href="/static/app.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+  <div id="side">
+    <h1>tak-buildings3d</h1><div class="sub">OSM buildings → 3D Tiles for ATAK, TAK-X and Cesium</div>
+    <div class="tabs" role="tablist">
+      <button id="tabNew" role="tab" class="on">New build</button>
+      <button id="tabPacks" role="tab">Builds <span id="packCount" class="count">0</span></button>
+      <button id="tabSettings" role="tab" title="Imagery sources and OSM data">Settings</button>
+    </div>
+
+    <!-- ============ new build + packs ============ -->
+    <div id="main">
+
+      <div id="flow">
+        <h2><span class="n">1</span> Area</h2>
+        <div class="seg">
+          <button id="drawRect">▭ Rectangle</button>
+          <button id="drawPoly">⬠ Polygon</button>
+          <button id="clearArea" title="Clear the area">Clear</button>
+        </div>
+        <div id="areaInfo" class="sub"></div>
+        <div id="dataInfo" class="sub"></div>
+
+        <h2><span class="n">2</span> Roofs</h2>
+        <div id="imgOpts" class="sub">
+          <div class="row"><span style="white-space:nowrap">Imagery</span><select id="imagery"></select></div>
+          <div class="row"><span style="white-space:nowrap">Detail</span><select id="mpp" title="Roof texture detail; Single colour is one measured colour per roof, the smallest"></select></div>
+          <div id="roofNote"></div>
+          <div id="imgLic"></div>
+        </div>
+
+        <h2><span class="n">3</span> Build</h2>
+        <div class="row"><input id="name" type="text" placeholder="Name, e.g. braddon">
+          <button id="build" class="primary" disabled>Build</button></div>
+        <div id="buildMsg" class="sub"></div>
+        <div id="jobs"></div>
+      </div>
+
+      <div id="packs" hidden>
+        <input id="packFilter" type="text" placeholder="Filter by name" aria-label="Filter builds by name" autocomplete="off">
+        <div id="builds"></div>
+      </div>
+    </div>
+
+    <!-- ============ settings ============ -->
+    <div id="settings" hidden>
+
+      <h2>Imagery sources</h2>
+      <div class="list" id="sources"></div>
+      <div class="sub" id="cacheInfo" style="margin-top:6px"></div>
+      <details style="margin-top:8px">
+        <summary class="sub" style="cursor:pointer">Add imagery…</summary>
+        <div class="row"><input id="imgName" type="text" placeholder="Name, e.g. City orthophoto 2025"></div>
+        <div class="row"><select id="imgFolder" title="Copy a folder of GeoTIFFs into tak-buildings3d-data/geotiff/ to list it here">
+          <option value="">From a tile server URL</option></select></div>
+        <div class="url row"><input id="imgUrl" type="text" placeholder="https://…/{z}/{x}/{y}.png  ({-y} TMS, {bbox} WMS)"></div>
+        <div class="url row"><input id="imgZoom" type="text" value="19" style="width:70px"> <span class="sub">max zoom</span></div>
+        <div class="row"><input id="imgAttr" type="text" placeholder="Attribution, e.g. © Provider, CC BY 4.0"></div>
+        <div class="url row"><input id="imgCov" type="text" placeholder="Coverage: min_lon,min_lat,max_lon,max_lat">
+          <button id="imgCovView" title="Use the current map view">Map view</button></div>
+        <div class="sub" id="imgFolderHint" hidden>Coverage and resolution are read from the files.</div>
+        <label class="row sub" style="align-items:flex-start"><input type="checkbox" id="imgOk" style="margin-top:3px">
+          I have checked that this imagery's licence allows deriving 3D models (roof colours and textures)
+          from it and sharing them. Many services forbid this, including Google, Bing and Esri World Imagery.</label>
+        <div class="row"><button id="imgSave">Save source</button> <span id="imgMsg" class="sub"></span></div>
+      </details>
+
+      <h2>OSM data</h2>
+      <div class="list" id="downloads"></div>
+      <div id="here" style="margin-top:8px"></div>
+    </div>
+  </div>
+  <div id="mapwrap">
+    <div id="map"></div>
+    <form id="search" role="search"><input id="q" type="search" enterkeyhint="search" placeholder="Search for a place…" aria-label="Search for a place" autocomplete="off">
+      <div id="results" hidden></div></form>
+    <div id="maptools">
+      <select id="layer" title="Imagery available here, drawn over the OpenStreetMap map"></select>
+      <input id="opacity" type="range" min="0" max="100" value="60" disabled title="Imagery opacity" style="width:90px">
+      <span id="opacityVal" class="sub" style="width:32px">60%</span>
+    </div>
+    <div id="drawhint"></div>
+    <div id="nav">
+      <button id="zoomIn" title="Zoom in (scroll wheel)" aria-label="Zoom in">+</button>
+      <button id="zoomOut" title="Zoom out" aria-label="Zoom out">−</button>
+      <button id="compass" title="Reset to north up (Ctrl-drag or right-drag to rotate)" aria-label="Reset to north up"><svg id="needle" width="16" height="22" viewBox="0 0 16 22" aria-hidden="true"><path d="M8 1 L13 11 L3 11 Z" fill="#c62828"/><path d="M8 21 L13 11 L3 11 Z" fill="#9aa3ad"/></svg></button>
+      <button id="zoomArea" title="Zoom to the drawn area" aria-label="Zoom to the drawn area" hidden>⌖</button>
+      <div id="tiltBox" title="Tilt: 0° looks straight down (or Ctrl-drag / right-drag)">
+        <div class="rot"><input id="tilt" type="range" min="0" max="80" step="1" value="0" aria-label="Tilt from straight down, degrees" aria-orientation="vertical"></div>
+        <span id="tiltVal">0°</span></div>
+    </div>
+    <div id="status"><div id="scale"><div id="scalebar"></div><span id="scaletxt"></span></div>
+      <span id="coords" title="Cursor position (WGS84 and MGRS)"></span>
+      <span id="alt" title="Ground altitude under the cursor above mean sea level (Copernicus DEM GLO-30). Click for feet / metres" style="cursor:pointer"></span></div>
+    <div id="modal" hidden><div class="box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="row" style="justify-content:space-between;margin:0 0 4px">
+        <b id="modalTitle">OSM data for this area</b><button id="modalClose" class="icon" title="Close" aria-label="Close">✕</button></div>
+      <div id="modalBody"></div>
+    </div></div>
+  </div>
+</div>
+</body>
+</html>

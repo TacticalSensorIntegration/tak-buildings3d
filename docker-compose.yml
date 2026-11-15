@@ -1,0 +1,9 @@
+services:
+  tak-buildings3d:
+    build: .
+    image: tak-buildings3d:latest
+    ports:
+      - "8000:8000"   # "127.0.0.1:8000:8000" for this computer only
+    volumes:
+      - ./tak-buildings3d-data:/data
+    restart: unless-stopped

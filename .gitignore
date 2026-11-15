@@ -1,0 +1,29 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.coverage
+
+# Downloads, caches and builds (local runs and the Docker volume)
+data/
+out/
+tak-buildings3d-data/
+*.part
+
+# Local reference material and drafts not meant for the repo
+references/
+docs/blog-*.md
+docs/imagery-notes.md
+scripts/
+tests/local/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.env

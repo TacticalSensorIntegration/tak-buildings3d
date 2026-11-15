@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Wrong or missing OSM data
+    url: https://www.openstreetmap.org/fixthemap
+    about: Heights, shapes or missing buildings often need fixing in OpenStreetMap itself.
