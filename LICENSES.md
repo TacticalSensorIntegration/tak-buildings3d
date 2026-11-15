@@ -42,45 +42,55 @@ has to allow derived works and redistribution.
 
 ### Built-in sources
 
-These are defined in `tak_buildings3d/imagery.py`, each with its licence, attribution text and a link
-to its terms. All of them allow commercial use and derived works. Licences were checked on the
-providers' own pages and service metadata in November 2026, and each service was tested.
+These are listed in `tak_buildings3d/sources.json`, each with its licence, a link to the provider's
+terms, the attribution text and the date it was checked. All of them allow commercial use and
+derived works. Licences were checked on the providers' own pages and service metadata, and each
+service was tested. The table below is generated from that file with
+`python -m tak_buildings3d.licences`, and CI fails if it falls out of step.
 
-| Source | Coverage | Licence | Credit |
-|---|---|---|---|
-| EOX Sentinel-2 cloudless 2016 | World | [CC BY 4.0](https://cloudless.eox.at) | Sentinel-2 cloudless 2016 by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2016) |
-| basemap.at Orthofoto | Austria | [CC BY 4.0](https://basemap.at/en/#lizenz) (Open Government Data Österreich) | Datenquelle: basemap.at |
-| ČÚZK Ortofoto | Czech Republic | [CC BY 4.0](https://cuzk.gov.cz/Predpisy/Podminky-poskytovani-prostor-dat-a-sitovych-sluzeb.aspx) | ČÚZK – on-line, with a note that it was modified |
-| IGN BD ORTHO (Géoplateforme) | France | [Licence Ouverte / Etalab 2.0](https://cartes.gouv.fr/cgu/) | © IGN |
-| Baden-Württemberg DOP20 | Baden-Württemberg | [dl-de/by-2-0](https://www.govdata.de/dl-de/by-2-0) | LGL-BW (year), www.lgl-bw.de |
-| Bayern DOP20 | Bavaria | [CC BY 4.0](https://www.geodaten.bayern.de/odd/m/3/html/nutzungsbedingungen.html) | Bayerische Vermessungsverwaltung – www.geodaten.bayern.de |
-| Berlin TrueDOP 2025 | Berlin | [dl-de/zero-2-0](https://www.govdata.de/dl-de/zero-2-0) | © Geoportal Berlin (courtesy) |
-| Brandenburg DOP20 | Brandenburg | [dl-de/by-2-0](https://www.govdata.de/dl-de/by-2-0) | © GeoBasis-DE/LGB (Daten geändert) |
-| Hessen DOP20 | Hesse | Open data under § 18 HVGG: any use, commercial included, no conditions (service metadata) | © HVBG Hessen, Daten verändert (courtesy) |
-| Niedersachsen DOP20 | Lower Saxony (not Bremen) | CC BY 4.0 (service metadata) | LGLN (year), CC BY 4.0 |
-| Geobasis NRW DOP | North Rhine-Westphalia | [dl-de/zero-2-0](https://www.govdata.de/dl-de/zero-2-0) | © GeoBasis-DE / Bezirksregierung Köln (courtesy) |
-| Sachsen DOP20 | Saxony | [dl-de/by-2-0](https://www.landesvermessung.sachsen.de/allgemeine-nutzungsbedingungen-8954.html) | Quelle: GeoSN |
-| Thüringen DOP20 | Thuringia | CC BY 4.0 (service metadata) | © GDI-Th |
-| geoportail.lu orthophoto | Luxembourg | [CC0](https://data.public.lu/fr/datasets/bd-l-ortho-webservices-wms-et-wmts/) | ACT Luxembourg (courtesy) |
-| PDOK Luchtfoto (Beeldmateriaal Nederland) | Netherlands | [CC BY 4.0](https://www.beeldmateriaal.nl/data-room) | Beeldmateriaal Nederland / PDOK |
-| DGT Ortofotos 2025 | Mainland Portugal | [CC BY 4.0](https://snig.dgterritorio.gov.pt/rndg/srv/api/records/96d83932-f957-40d6-a2ea-3a25751c4b2d) | Informação geográfica cedida pela Direção-Geral do Território |
-| GURS DOF025 | Slovenia | [CC BY 4.0](https://www.e-prostor.gov.si/en/access-to-geodetic-data/) | Surveying and Mapping Authority of the Republic of Slovenia |
-| IGN España PNOA | Spain, Balearic and Canary Islands (not Melilla) | [CC BY 4.0](https://www.ign.es/resources/licencia/Condiciones_licenciaUso_IGN.pdf) | Obra derivada de PNOA CC BY 4.0 scne.es |
-| swisstopo SWISSIMAGE | Switzerland | [swisstopo free geodata](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices), with attribution | © swisstopo |
-| GSI seamless photo (地理院タイル) | Japan | [Public Data License 1.0](https://maps.gsi.go.jp/development/ichiran.html), compatible with CC BY 4.0 | 地理院タイル (GSI), edited |
-| USDA NAIP, read from [Microsoft Planetary Computer](https://planetarycomputer.microsoft.com/dataset/naip) (original 0.6 m GeoTIFFs), with the USGS National Map service as map layer and fallback | Contiguous US | Public domain ([USGS](https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits)). Planetary Computer's [terms of use](https://planetarycomputer.microsoft.com/terms) apply; no account needed | Imagery: USDA NAIP (public domain), via Microsoft Planetary Computer and USGS The National Map |
-| CT ECO 2023 orthoimagery (7.5 cm) | Connecticut | No use limitations ([metadata](https://cteco.uconn.edu/download/metadata/CT_ortho_2023_metadata.htm)) | CT ECO, State of Connecticut |
-| IndianaMap current imagery | Indiana | [CC0](https://registry.opendata.aws/in-imagery/) | Indiana Geographic Information Office |
-| KyFromAbove 3-inch | Kentucky | Public domain with attribution ([registry](https://registry.opendata.aws/kyfromabove/)) | KyFromAbove, Kentucky Division of Geographic Information |
-| MassGIS 2025 aerial imagery | Massachusetts | "No restrictions apply to these data" ([item](https://www.arcgis.com/home/item.html?id=a3bbd504c80746ac9aedc7b5ca4e0d00)) | MassGIS |
-| MSDIS 6-inch 2023–2024 | Missouri | [CC BY 4.0](https://registry.opendata.aws/mo-gis-imagery/) | Missouri Spatial Data Information Service |
-| NC OneMap orthoimagery (latest) | North Carolina | Free and unrestricted use ([terms](https://www.nconemap.gov/pages/terms)) | NC Center for Geographic Information and Analysis, NC 911 Board |
-| VCGI best of colour | Vermont | Free and unrestricted in use ([Vermont Imagery Program](https://vcgi.vermont.gov/node/156)) | VCGI, Vermont Imagery Program |
-| OCTO 2025 orthoimagery (7.5 cm) | Washington DC | [CC BY 4.0](https://imagery.dcgis.dc.gov/dcgis/rest/services/Ortho/Ortho_2025/ImageServer/info/metadata) | Office of the Chief Technology Officer, District of Columbia |
-| Ontario Imagery Web Map Service (OIWMS) | Ontario | [Open Government Licence – Ontario](https://www.ontario.ca/page/open-government-licence-ontario) | Contains information licensed under the Open Government Licence – Ontario |
-| City of Toronto orthophoto | City of Toronto | [Open Government Licence – Toronto](https://open.toronto.ca/open-data-license/) | Contains information licensed under the Open Government Licence – Toronto |
-| IPP true orthophoto 2024 (Mosaico 2024) | City of Rio de Janeiro | [CC BY 4.0](https://pgeo3.rio.rj.gov.br/arcgis/rest/services/Imagens/Mosaico_2024/ImageServer/info/iteminfo) | Instituto Pereira Passos, PCRJ |
-| ACT Government aerial imagery | Canberra (ACT) | [CC BY 4.0](https://actmapi-actgov.opendata.arcgis.com/maps/ACTGOV::act-aerial-imagery-current/about) | Australian Capital Territory and Aerometrex |
+<!-- sources.json table -->
+| Source | Licence | Attribution |
+|---|---|---|
+| World – Sentinel-2 cloudless 2016 | [CC BY 4.0 (2016 layer only; later years are CC BY-NC-SA)](https://cloudless.eox.at) | Sentinel-2 cloudless 2016 by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2016), CC BY 4.0 |
+| Austria – basemap.at Orthofoto | [CC BY 4.0 (Open Government Data Österreich)](https://basemap.at/en/#lizenz) | Datenquelle: basemap.at, CC BY 4.0 |
+| Czech Republic – ČÚZK Ortofoto | [CC BY 4.0](https://cuzk.gov.cz/Predpisy/Podminky-poskytovani-prostor-dat-a-sitovych-sluzeb.aspx) | Ortofoto © ČÚZK (ČÚZK – on-line), CC BY 4.0, upraveno |
+| France – IGN BD ORTHO | [Etalab Open Licence 2.0](https://cartes.gouv.fr/cgu/) | Imagery (c) IGN BD ORTHO, Licence Ouverte / Etalab 2.0 |
+| Germany, Baden-Württemberg – DOP20 | [Datenlizenz Deutschland Namensnennung 2.0](https://www.govdata.de/dl-de/by-2-0) | LGL-BW (2026) Datenlizenz Deutschland - Namensnennung - Version 2.0, www.lgl-bw.de |
+| Germany, Bavaria – DOP20 | [CC BY 4.0](https://www.geodaten.bayern.de/odd/m/3/html/nutzungsbedingungen.html) | Bayerische Vermessungsverwaltung – www.geodaten.bayern.de, CC BY 4.0 |
+| Germany, Berlin – TrueDOP 2025 | [Datenlizenz Deutschland Zero 2.0](https://www.govdata.de/dl-de/zero-2-0) | © Geoportal Berlin, dl-de/zero-2-0 |
+| Germany, Brandenburg – DOP20 | [Datenlizenz Deutschland Namensnennung 2.0](https://www.govdata.de/dl-de/by-2-0) | © GeoBasis-DE/LGB, dl-de/by-2-0 (Daten geändert) |
+| Germany, Hesse – DOP20 | [Open data under § 18 HVGG (any use, no conditions)](https://www.gds-srv.hessen.de/cgi-bin/lika-services/ogc-free-images.ows?SERVICE=WMS&REQUEST=GetCapabilities) | © HVBG Hessen (Daten verändert) |
+| Germany, Lower Saxony – DOP20 | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | LGLN (2026) CC BY 4.0 |
+| Germany, North Rhine-Westphalia – DOP | [Datenlizenz Deutschland Zero 2.0](https://www.govdata.de/dl-de/zero-2-0) | © GeoBasis-DE / Bezirksregierung Köln, dl-de/zero-2-0 |
+| Germany, Saxony – DOP20 | [Datenlizenz Deutschland Namensnennung 2.0](https://www.landesvermessung.sachsen.de/allgemeine-nutzungsbedingungen-8954.html) | Quelle: GeoSN, dl-de/by-2-0 |
+| Germany, Thuringia – DOP20 | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | © GDI-Th, CC BY 4.0 |
+| Luxembourg – geoportail.lu orthophoto | [CC0](https://data.public.lu/fr/datasets/bd-l-ortho-webservices-wms-et-wmts/) | Orthophoto © ACT Luxembourg (geoportail.lu), CC0 |
+| Netherlands – PDOK Luchtfoto | [CC BY 4.0](https://www.beeldmateriaal.nl/data-room) | Luchtfoto: Beeldmateriaal Nederland / PDOK, CC BY 4.0 |
+| Portugal – DGT Ortofotos 2025 | [CC BY 4.0](https://snig.dgterritorio.gov.pt/rndg/srv/api/records/96d83932-f957-40d6-a2ea-3a25751c4b2d) | Informação geográfica cedida pela Direção-Geral do Território (Ortofotos 2025), CC BY 4.0 |
+| Slovenia – GURS DOF025 | [CC BY 4.0](https://www.e-prostor.gov.si/en/access-to-geodetic-data/) | Surveying and Mapping Authority of the Republic of Slovenia (GURS), DOF025, CC BY 4.0 |
+| Spain – IGN PNOA | [CC BY 4.0](https://www.ign.es/resources/licencia/Condiciones_licenciaUso_IGN.pdf) | Obra derivada de PNOA CC BY 4.0 scne.es |
+| Switzerland – swisstopo SWISSIMAGE | [swisstopo OGD (free use, attribution)](https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices) | Imagery (c) swisstopo (SWISSIMAGE), free use with attribution |
+| Japan – GSI seamless photo | [Public Data License 1.0 (CC BY 4.0 compatible)](https://maps.gsi.go.jp/development/ichiran.html) | 地理院タイル (GSI Japan) を加工して作成, PDL 1.0 |
+| Canada, Ontario – Ontario Imagery Web Map Service | [Open Government Licence – Ontario](https://www.ontario.ca/page/open-government-licence-ontario) | Contains information licensed under the Open Government Licence – Ontario |
+| Canada, Toronto – City of Toronto orthophoto | [Open Government Licence – Toronto](https://open.toronto.ca/open-data-license/) | Contains information licensed under the Open Government Licence – Toronto |
+| United States – USDA NAIP | [Public domain](https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits) | Imagery: USDA NAIP (public domain), via Microsoft Planetary Computer and USGS The National Map |
+| United States, Connecticut – CT ECO 2023 | [No use limitations (CT ECO metadata)](https://cteco.uconn.edu/download/metadata/CT_ortho_2023_metadata.htm) | Imagery: CT ECO, State of Connecticut, 2023 |
+| United States, Indiana – IndianaMap current imagery | [CC0](https://registry.opendata.aws/in-imagery/) | Imagery: Indiana Geographic Information Office (CC0) |
+| United States, Kentucky – KyFromAbove 3-inch | [Public domain with attribution](https://registry.opendata.aws/kyfromabove/) | Imagery: KyFromAbove, Kentucky Division of Geographic Information |
+| United States, Massachusetts – MassGIS 2025 | [No restrictions (MassGIS)](https://www.arcgis.com/home/item.html?id=a3bbd504c80746ac9aedc7b5ca4e0d00) | Imagery: MassGIS 2025 |
+| United States, Missouri – MSDIS 6-inch 2023–2024 | [CC BY 4.0](https://registry.opendata.aws/mo-gis-imagery/) | Imagery: Missouri Spatial Data Information Service (MSDIS), CC BY 4.0 |
+| United States, North Carolina – NC OneMap orthoimagery | [Free and unrestricted use (NC OneMap)](https://www.nconemap.gov/pages/terms) | Imagery: NC OneMap, NC Center for Geographic Information and Analysis, NC 911 Board |
+| United States, Vermont – VCGI best of colour | [Unrestricted use (Vermont Imagery Program)](https://vcgi.vermont.gov/node/156) | Imagery: VCGI, Vermont Imagery Program |
+| United States, Washington DC – OCTO 2025 | [CC BY 4.0](https://imagery.dcgis.dc.gov/dcgis/rest/services/Ortho/Ortho_2025/ImageServer/info/metadata) | Imagery: Office of the Chief Technology Officer, District of Columbia, CC BY 4.0 |
+| Brazil, Rio de Janeiro – IPP true orthophoto 2024 | [CC BY 4.0](https://pgeo3.rio.rj.gov.br/arcgis/rest/services/Imagens/Mosaico_2024/ImageServer/info/iteminfo) | Mosaico 2024, Instituto Pereira Passos, PCRJ, CC BY 4.0 |
+| Australia, ACT – ACT Government aerial imagery | [CC BY 4.0](https://actmapi-actgov.opendata.arcgis.com/maps/ACTGOV::act-aerial-imagery-current/about) | Imagery CC BY 4.0 Australian Capital Territory and Aerometrex |
+<!-- end sources.json table -->
+
+NAIP is read from [Microsoft Planetary Computer](https://planetarycomputer.microsoft.com/dataset/naip)
+(the original 0.6 m GeoTIFFs), with the USGS National Map service as map layer and fallback.
+Planetary Computer's [terms of use](https://planetarycomputer.microsoft.com/terms) apply; no account
+is needed. Spain's source leaves out Melilla, which is satellite imagery rather than PNOA, and Lower
+Saxony's leaves out Bremen.
 
 Toronto's and Rio's sources cover only the city, so they're used inside the city boundary from
 OpenStreetMap, kept simplified in `tak_buildings3d/outlines.json` (© OpenStreetMap contributors, ODbL).

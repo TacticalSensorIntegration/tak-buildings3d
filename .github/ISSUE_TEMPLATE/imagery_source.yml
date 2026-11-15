@@ -9,7 +9,7 @@ body:
         because textured roofs are cut from the imagery and shared in every build. CC BY 4.0, CC0,
         public domain and most national open government licences qualify. Non-commercial (NC) and
         no-derivatives (ND) licences, and "view only" terms, don't. See LICENSES.md for the
-        current list.
+        current list, and `tak_buildings3d/sources.json` for the details of each source.
   - type: input
     id: coverage
     attributes:

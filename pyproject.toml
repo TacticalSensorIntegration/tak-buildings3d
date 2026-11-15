@@ -38,5 +38,5 @@ tak-buildings3d = "tak_buildings3d.cli:main"
 include = ["tak_buildings3d*"]
 
 [tool.setuptools.package-data]
-"tak_buildings3d" = ["outlines.json"]
+"tak_buildings3d" = ["outlines.json", "sources.json"]
 "tak_buildings3d.web" = ["static/**/*"]
