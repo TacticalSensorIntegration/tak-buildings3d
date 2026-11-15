@@ -22,7 +22,7 @@ body:
     id: url
     attributes:
       label: Tile service URL
-      description: XYZ, WMTS, WMS or ArcGIS MapServer/ImageServer endpoint, with no API key.
+      description: Only provide URLs that are CC BY 4.0 or similar. XYZ, WMTS, WMS or ArcGIS MapServer/ImageServer endpoint, with no API key.
       placeholder: https://example.org/wmts/ortho/{z}/{x}/{y}.jpg
     validations:
       required: true
